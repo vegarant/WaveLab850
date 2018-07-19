@@ -13,8 +13,9 @@ function Signal = ReadSignal(Name)
 %    A descriptor file for the data is printed
 %
     global WLVERBOSE
-	global WAVELABPATH        % set by WavePath.m
-	global PATHNAMESEPARATOR  % set by WavePath.m 
+    current_directory = fileparts(mfilename('fullpath'));
+	%global WAVELABPATH        % set by WavePath.m
+	%global PATHNAMESEPARATOR  % set by WavePath.m 
 %
 	if strcmp(Name,'Tweet'),
 	  filename = 'tweet';
@@ -49,8 +50,9 @@ function Signal = ReadSignal(Name)
 	end
 	
 	if ~strcmp(filename,'BOGUS'),
-	    filepath = [WAVELABPATH 'Datasets'  ...
-	               PATHNAMESEPARATOR filename '.asc'];
+	    filepath = fullfile(current_directory, [filename, '.asc'] );
+        %filepath = [WAVELABPATH 'Datasets'  ...
+	    %           PATHNAMESEPARATOR filename '.asc'];
 	    fid = fopen(filepath,'r');
 	    if fid < 0,
 	        disp('ReadSignal: I was unable to open the dataset you requested        ');
@@ -62,8 +64,10 @@ function Signal = ReadSignal(Name)
 	    else
 	       if strcmp(WLVERBOSE,'Yes') 
 		 fprintf('Reading %s\n', filepath)
-		 docpath = [WAVELABPATH 'Datasets'  ...
-		       PATHNAMESEPARATOR filename '.txt'];
+		 docpath = fullfile(current_directory, [filename, '.txt'] );
+
+         %docpath = [WAVELABPATH 'Datasets'  ...
+		 %      PATHNAMESEPARATOR filename '.txt'];
 		 type(docpath)
 	       end	       
 	        Signal = fscanf(fid,'%g');

@@ -12,8 +12,10 @@
 %	(5) startup matlab
 %	(6) Invoke this script in matlab
 %
-	global WAVELABPATH
-	cd([WAVELABPATH 'MexSource'])
+  %global WAVELABPATH
+  %cd([WAVELABPATH 'MexSource'])
+  current_directory = fileparts(mfilename('fullpath'));
+  cd(current_directory);
 	
   Friend = computer;
   isPC = 0; isMAC = 0;
@@ -57,6 +59,6 @@
     acopy('IAIPT.mex' ,'::Papers:MIPT')
     acopy('LMIRefineSeq.mex' ,'::Papers:MIPT')
     acopy('MedRefineSeq.mex' ,'::Papers:MIPT')
-  eval(sprintf('cd ''%s''', WAVELABPATH));
-
+  %eval(sprintf('cd ''%s''', WAVELABPATH));
+  cd(fullfile(current_directory, '..'));
 	clear isPC isMAC

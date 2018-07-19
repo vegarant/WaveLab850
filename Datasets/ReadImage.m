@@ -12,8 +12,9 @@ function Image = ReadImage(Name)
 %    A descriptor file for the data is printed
 %
     global WLVERBOSE
-	global WAVELABPATH        % set by WavePath.m
-	global PATHNAMESEPARATOR  % set by WavePath.m
+    current_directory = fileparts(mfilename('fullpath'));
+	%global WAVELABPATH        % set by WavePath.m
+	%global PATHNAMESEPARATOR  % set by WavePath.m
 %
 	if strcmp(Name,'Barton'),
 	    filename = 'barton.raw';
@@ -63,8 +64,9 @@ function Image = ReadImage(Name)
 	end
 	
 	if ~strcmp(filename,'BOGUS'),
-	    filename = [WAVELABPATH 'Datasets'  ...
-	               PATHNAMESEPARATOR filename];
+	    filename = fullfile(current_directory, filename);
+        %filename = [WAVELABPATH 'Datasets'  ...
+	    %           PATHNAMESEPARATOR filename];
 	    fid = fopen(filename,'r');
 	    if fid < 0,
 	        fprintf('ReadImage: I was unable to open the dataset "%s"',filename);
@@ -77,8 +79,9 @@ function Image = ReadImage(Name)
 		if strcmp(WLVERBOSE,'Yes') 
 		  fprintf('Reading %s\n', filename)
 		  fprintf('It is an array of size [%4.0f,%4.0f]\n',par(1),par(2))
-		  docfile = [WAVELABPATH 'Datasets'  ...
-			PATHNAMESEPARATOR source];
+		  docfile = fullfile(current_directory, source);
+        %  docfile = [WAVELABPATH 'Datasets'  ...
+		%	PATHNAMESEPARATOR source];
 		  type(source)
 		end
 	        Image = fread(fid,par);

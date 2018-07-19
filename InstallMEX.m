@@ -1,6 +1,6 @@
 function InstallMEX
 
-global WAVELABPATH
+WAVELABPATH = fileparts(mfilename('fullpath'));
 
 MEX_OK = 1;
 
@@ -35,7 +35,8 @@ if strcmp(R,'') + strcmp(R,'Yes') | strcmp(R,'yes') | strcmp(R,'y') | strcmp(R,'
   disp(' ')      
   FIRST_COMPILE = 0;
   
-  eval(sprintf('cd ''%sMEXSource''', WAVELABPATH));
+  cd(fullfile(WAVELABPATH, 'MEXSource'));
+  %eval(sprintf('cd ''%sMEXSource''', WAVELABPATH));
   
   for file={'CPAnalysis' 'WPAnalysis' 'FWT_PO' 'FWT2_PO' 'IWT_PO' ...
 	'IWT2_PO' 'UpDyadHi' 'UpDyadLo' 'DownDyadHi' 'DownDyadLo' 'dct_iv' ...
@@ -148,7 +149,8 @@ if strcmp(R,'') + strcmp(R,'Yes') | strcmp(R,'yes') | strcmp(R,'y') | strcmp(R,'
 end
 end
 
-eval(sprintf('cd ''%s''', WAVELABPATH));
+cd(WAVELABPATH);
+%eval(sprintf('cd ''%s''', WAVELABPATH));
 
 clear MEX_OK isPC R
  
