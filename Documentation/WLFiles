@@ -12,7 +12,7 @@ wt02fig01.m  WTCh02Demo.m
                             
      ***** ./Wavelab850/Books/WaveTour/WTCh04/ **********  
 Analytic.m	quadinterpol.m	wt04fig07.m  wt04fig15.m    wt04fig20.m
-ImageAWTnew.m	realpow.m	wt04fig08.m  wt04fig16.asv  wt04fig21.m
+ImageAWTnew.m	realpow1.m	wt04fig08.m  wt04fig16.asv  wt04fig21.m
 log2linChap4.m	WindowFT.m	wt04fig11.m  wt04fig16.m    wt04fig22.m
 MakeChirps.m	wt04fig03.m	wt04fig12.m  wt04fig17.m    WTCh04Demo.m
 MakeWindow.m	wt04fig05.m	wt04fig13.m  wt04fig18.m

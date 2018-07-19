@@ -32,11 +32,11 @@ function win = MakeWindow(Name,n)
  if strcmp(Name,'Rectangle'),
  	win = ones(size(t));
  elseif strcmp(Name,'Hanning'),
-	win = realpow(cos(pi.*t),2);
+	win = realpow1(cos(pi.*t),2);
  elseif strcmp(Name,'Hamming'),
 	win = .54 + .46*cos(2.*pi.*t);
  elseif strcmp(Name,'Gaussian'),
-	win = exp(-realpow(t,2)*18);
+	win = exp(-realpow1(t,2)*18);
  elseif strcmp(Name,'Blackman'),
 	win = .42 + .50*cos(2.*pi.*t) + .08*cos(4.*pi.*t);
  end;

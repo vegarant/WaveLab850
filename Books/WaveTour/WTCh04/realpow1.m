@@ -1,4 +1,4 @@
-function r = realpow(x,d)
+function r = realpow1(x,d)
 
 r=(real(x)).^d;
 

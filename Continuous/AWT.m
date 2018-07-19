@@ -68,7 +68,7 @@ function awt = AWT(x,nvoice,Name,sigma2,par2)
       	      freq =  (s .* omega  - xi);
               freq = freq(:);
 	      omega = omega(:);
-	      Psi = realpow(4.*pi.*sigma2,1/4)*exp(-sigma2/2*freq.*freq);
+	      Psi = realpow1(4.*pi.*sigma2,1/4)*exp(-sigma2/2*freq.*freq);
               Psi = Psi .* (omega>0);
         end; 
 	awt(1:n,kscale) = ifft(fftx.*Psi);
