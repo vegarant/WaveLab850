@@ -1,4 +1,4 @@
-function InstallMEX
+function wl_install_mex
 
 WAVELABPATH = fileparts(mfilename('fullpath'));
 
