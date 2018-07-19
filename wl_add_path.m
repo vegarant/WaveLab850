@@ -54,4 +54,4 @@ addpath(fullfile(wavelab_root, 'Median'));
 addpath(fullfile(wavelab_root, 'Median', 'HigherDegree')); 
 addpath(fullfile(wavelab_root, 'Utilities')); 
 
-
+clear wavelab_root
