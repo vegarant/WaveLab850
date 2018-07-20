@@ -18,7 +18,7 @@ classdef TestCDJV < matlab.unittest.TestCase
             obj.dim = 7;
             obj.N = 2^obj.dim;
             obj.x = rand([obj.N,1]);
-            obj.eps = 1e-4;
+            obj.eps = 1e-5;
             obj.nres = 2;
             obj.J0 = obj.dim - obj.nres;
         end
@@ -71,6 +71,7 @@ classdef TestCDJV < matlab.unittest.TestCase
             testWaveletDecRec_noP(testCase, 8);
         end
 
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         function testDB2_boundary_property(testCase)
             testPrecondBoundary(testCase, 2);  
@@ -94,15 +95,42 @@ classdef TestCDJV < matlab.unittest.TestCase
             testPrecondBoundary(testCase, 8);  
         end
 
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        
+        function testDB2_orthonormality(testCase)
+            testOrthonormality(testCase, 2);
+        end
+        function testDB3_orthonormality(testCase)
+            testOrthonormality(testCase, 3);
+        end
+        function testDB4_orthonormality(testCase)
+            testOrthonormality(testCase, 4);
+        end
+        function testDB5_orthonormality(testCase)
+            testOrthonormality(testCase, 5);
+        end
+        function testDB6_orthonormality(testCase)
+            testOrthonormality(testCase, 6);
+        end
+        function testDB7_orthonormality(testCase)
+            testOrthonormality(testCase, 7);
+        end
+        function testDB8_orthonormality(testCase)
+            testOrthonormality(testCase, 8);
+        end
+
     end
 
     methods (Access=private)
+        
+        
         function testWaveletDecRec(testCase, vm)
             x   = testCase.x;
             eps = testCase.eps;
             J0  = testCase.J0;
             z = IWT_CDJV( FWT_CDJV(x, J0, vm), J0, vm);
-            testCase.verifyTrue(norm(z-x,2) < eps);
+            % Check relative error
+            testCase.verifyTrue(norm(z-x,2) < norm(x,2)*eps);
         end
 
         function testWaveletDecRec_noP(testCase, vm)
@@ -110,7 +138,8 @@ classdef TestCDJV < matlab.unittest.TestCase
             eps = testCase.eps;
             J0  = testCase.J0;
             z = IWT_CDJV_noP( FWT_CDJV_noP(x, J0, vm), J0, vm);
-            testCase.verifyTrue(norm(z-x,2) < eps);
+            % Check relative error
+            testCase.verifyTrue(norm(z-x,2) < norm(x,2)*eps);
         end
 
         function testPrecondBoundary(testCase, vm)
@@ -131,6 +160,27 @@ classdef TestCDJV < matlab.unittest.TestCase
             end
             testCase.verifyTrue(success);
             
+        end
+        
+        function testOrthonormality(testCase, vm)
+            N   = testCase.N;
+            J0  = testCase.J0;
+            eps = testCase.eps; 
+            
+            W = zeros([N,N]);
+            for i = 1:N
+                ei = zeros([N,1]); ei(i)=1;
+                W(:,i) = FWT_CDJV_noP(ei, J0, vm);
+            end
+            A = W'*W;
+            B = W*W';
+            I = eye(N);
+            %disp('-----------')
+            %vm
+            %norm(A-I, 'fro')
+            %norm(B-I, 'fro')
+            testCase.verifyTrue(norm(A-I,'fro') < eps);
+            testCase.verifyTrue(norm(B-I,'fro') < eps);
         end
 
     end
