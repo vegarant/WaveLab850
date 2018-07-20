@@ -1,5 +1,4 @@
 function [a,b,c] = MakeCDJVFilter(request,DN)
-
 % MakeCDJVFilter --  Set up filters for CDJV Wavelet Transform by reading
 % in the text files in the directory CDJV_Filters
 %  Usage
@@ -27,12 +26,13 @@ function [a,b,c] = MakeCDJVFilter(request,DN)
 %    Cohen, Daubechies, Jawerth and Vial, 1992.
 %
 
+filter_src = 'DB_Filters';
 cur_dir =  fileparts(mfilename('fullpath'));
 
 if (strcmp(request,'HighPass')||strcmp(request,'LowPass'))
     
     %Internal Filter
-    filename = fullfile(cur_dir, 'CDJV_Filters', sprintf('FILT%d.txt',  DN));
+    filename = fullfile(cur_dir, filter_src, sprintf('FILT%d.txt',  DN));
     fid = fopen(filename);
     B=textscan(fid,'%s',inf,'delimiter','\n');
     fclose(fid);
@@ -48,9 +48,8 @@ if (strcmp(request,'HighPass')||strcmp(request,'LowPass'))
         internal_filters =  (sqrt(2)/s_f) *internal_filters;
     end
 
-
     %%%Left Filter
-    filename = fullfile(cur_dir, 'CDJV_Filters', sprintf('LFILT%d.txt',  DN));
+    filename = fullfile(cur_dir, filter_src, sprintf('LFILT%d.txt',  DN));
     fid = fopen(filename);
     A = fscanf(fid, '%e %e', [2 inf]);
     fclose(fid);
@@ -58,15 +57,12 @@ if (strcmp(request,'HighPass')||strcmp(request,'LowPass'))
     left_HP = A(2,:);
 
     %%%Right Filter
-
-    filename = fullfile(cur_dir, 'CDJV_Filters', sprintf('RFILT%d.txt',  DN));
+    filename = fullfile(cur_dir, filter_src, sprintf('RFILT%d.txt',  DN));
     fid = fopen(filename);
     A = fscanf(fid, '%e %e', [2 inf]);
     fclose(fid);
     right_LP = A(1,:);
     right_HP = A(2,:);
-
-
 
     if strcmp(request,'HighPass'),
         LEHI = zeros(DN,3*DN-1); k=1; l=1;
@@ -101,7 +97,7 @@ if (strcmp(request,'HighPass')||strcmp(request,'LowPass'))
 end
     if (strcmp(request,'PreCondition')||strcmp(request,'PostCondition'))
 
-    filename = fullfile(cur_dir, 'CDJV_Filters', sprintf('LCOND%d.txt',  DN));
+    filename = fullfile(cur_dir, filter_src, sprintf('LCOND%d.txt',  DN));
     fid = fopen(filename);
     %fid = fopen(sprintf('%s/CDJV_Filters/LCOND%d.txt', cur_dir, DN));
     A = fscanf(fid, '%f %f', [2 inf]);
@@ -114,7 +110,7 @@ end
     LPOSTMAT = reshape(left_postcond, sqrt(length(left_postcond)), sqrt(length(left_postcond)));
 
 
-    filename = fullfile(cur_dir, 'CDJV_Filters', sprintf('RCOND%d.txt',  DN));
+    filename = fullfile(cur_dir, filter_src, sprintf('RCOND%d.txt',  DN));
     fid = fopen(filename);
     %fid = fopen(sprintf('%s/CDJV_Filters/RCOND%d.txt', cur_dir, DN));
     A = fscanf(fid, '%f %f', [2 inf]);
