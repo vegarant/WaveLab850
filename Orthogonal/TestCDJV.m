@@ -1,7 +1,8 @@
 classdef TestCDJV < matlab.unittest.TestCase
     % TestCDJV test if a the DWT and IDWT function calles reveres each other
     % for all kernel functions. It also checks if the vanishing moments 
-    % condition holds for preconditioned wavelets.
+    % condition holds for preconditioned wavelets and if the transform without 
+    % the preconditioning is orthonormal.
     %
     % USAGE:
     % >> testCase = TestCDJV;
